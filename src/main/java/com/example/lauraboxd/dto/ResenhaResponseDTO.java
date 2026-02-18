@@ -18,8 +18,8 @@ public class ResenhaResponseDTO {
     private BigDecimal nota;
     private String comentario;
     private ResenhaModel.TipoConteudo tipoConteudo;
-    private Long idSerieTmdb;
-    private Integer TemporadaNumero;
+    private Long serieTmdbId;
+    private Integer temporadaNumero;
 
     public static ResenhaResponseDTO fromModel (ResenhaModel resenhaModel) {
         return new ResenhaResponseDTO(
