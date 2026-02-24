@@ -1,80 +1,157 @@
-Lauraboxd Backend
-API backend do projeto Lauraboxd, construída com Java + Spring Boot, com persistência em PostgreSQL e autenticação via JWT.
+## 🎬 Lauraboxd Backend API
 
-Stack
-Java + Spring Boot
+API backend do **Lauraboxd**, uma aplicação para registrar, organizar e compartilhar resenhas de filmes e séries.
 
-Maven
+O projeto foi desenvolvido com **Java + Spring Boot**, persistência em **PostgreSQL** e autenticação **JWT (token-based)**, seguindo boas práticas de arquitetura REST.
 
-PostgreSQL
+---
 
-JWT (token-based auth)
+## 🚀 Stack Tecnológica
 
-Deploy: Render (ou similar)
+* **Java 17+**
+* **Spring Boot** (Web, Data JPA, Security)
+* **PostgreSQL** (produção e desenvolvimento)
+* **JWT** para autenticação e autorização
+* **Maven** para gerenciamento de dependências
+* **Deploy:** Render / Neon (ou qualquer plataforma compatível)
 
-Estrutura do projeto
-src/main/java/... — código fonte (controllers, services, repositories, security etc.)
+---
 
-src/main/resources/application.properties — configurações (sem segredos; tudo via env vars)
+## 📂 Estrutura do Projeto
 
-Pré-requisitos
-Java (recomendado 17+)
+```
+src/
+ └── main/
+     ├── java/
+     │   └── com.example.lauraboxd/
+     │       ├── controller/   # Endpoints REST
+     │       ├── service/       # Regras de negócio
+     │       ├── repository/    # Repositórios JPA
+     │       ├── model/          # Entidades
+     │       ├── dto/            # DTOs de requisição/resposta
+     │       └── security/       # Configuração JWT e Spring Security
+     └── resources/
+         └── application.properties  # Configurações via ENV
+```
 
-Maven (ou usar o wrapper ./mvnw)
+> ⚠️ Nenhuma credencial é versionada. Todas as configurações sensíveis são feitas via variáveis de ambiente.
 
-PostgreSQL (local ou Neon/Render)
+---
 
-Como rodar localmente
-1) Configure variáveis de ambiente
-Você pode exportar as env vars no terminal antes de rodar:
+## ⚙️ Pré-requisitos
 
-Windows PowerShell
+* **Java 17 ou superior**
+* **Maven** (ou Maven Wrapper `./mvnw`)
+* **PostgreSQL** (local) ou banco gerenciado (Neon / Render)
+
+---
+
+## ▶️ Como Rodar Localmente
+
+### 1️⃣ Configure as variáveis de ambiente
+
+#### Windows (PowerShell)
+
+
 $env:SPRING_DATASOURCE_URL="jdbc:postgresql://HOST:5432/DB"
 $env:SPRING_DATASOURCE_USERNAME="USER"
 $env:SPRING_DATASOURCE_PASSWORD="PASS"
-$env:JWT_SECRET="uma_chave_forte"
-$env:JWT_EXPIRATION="3600000"   # opcional (ms)
-$env:PORT="8080"                # opcional
-Observação: o projeto usa server.port=${PORT:8080} então, se PORT não existir, ele sobe na 8080.
+$env:JWT_SECRET="uma_chave_super_secreta"
+$env:JWT_EXPIRATION="3600000" # opcional (ms)
+$env:PORT="8080"              # opcional
+```
 
-2) Suba a aplicação
+#### Linux / macOS
+
+
+export SPRING_DATASOURCE_URL=jdbc:postgresql://HOST:5432/DB
+export SPRING_DATASOURCE_USERNAME=USER
+export SPRING_DATASOURCE_PASSWORD=PASS
+export JWT_SECRET=uma_chave_super_secreta
+export JWT_EXPIRATION=3600000
+export PORT=8080
+```
+
+> O projeto usa `server.port=${PORT:8080}` — se `PORT` não for definido, a aplicação sobe na porta **8080**.
+
+---
+
+### 2️⃣ Subir a aplicação
+
+
 ./mvnw spring-boot:run
+```
 
 ou
 
+
 ./mvnw clean package
 java -jar target/*.jar
-Variáveis de ambiente (produção)
-Crie no Render (ou sua plataforma) as variáveis:
+```
 
-SPRING_DATASOURCE_URL
+---
 
-SPRING_DATASOURCE_USERNAME
+## 🌐 Variáveis de Ambiente (Produção)
 
-SPRING_DATASOURCE_PASSWORD
+Configure na plataforma de deploy (Render, Railway, etc.):
 
-JWT_SECRET
+* `SPRING_DATASOURCE_URL`
+* `SPRING_DATASOURCE_USERNAME`
+* `SPRING_DATASOURCE_PASSWORD`
+* `JWT_SECRET`
+* `JWT_EXPIRATION` (opcional)
+* `PORT` (geralmente definido automaticamente)
 
-JWT_EXPIRATION (opcional)
+---
 
-PORT (normalmente a plataforma define automaticamente)
+## 🔐 Autenticação
 
-Boas práticas e segurança
-Nunca commite credenciais em application.properties.
+* Rotas protegidas exigem header:
 
-Não versionar target/ (Maven build output).
+```http
+Authorization: Bearer <SEU_TOKEN_JWT>
+```
 
-Se alguma credencial já foi exposta no histórico, rotacione senha/token imediatamente.
+* Tokens são gerados após login e possuem tempo de expiração configurável.
 
-Rotas protegidas exigem Authorization: Bearer <token>
+---
 
-Contribuição
-Faça um fork
+## 🧪 Boas Práticas de Segurança
 
-Crie uma branch: git checkout -b feature/minha-feature
+* ❌ Nunca commitar credenciais no repositório
+* ❌ Não versionar a pasta `target/`
+* 🔁 Rotacionar senhas/tokens caso sejam expostos
+* 🔐 Usar variáveis de ambiente em todos os ambientes
 
-Commit: git commit -m "Minha feature"
+---
 
-Push: git push origin feature/minha-feature
+## 🤝 Contribuição
 
-Abra um Pull Request
+1. Faça um **fork** do projeto
+2. Crie uma branch:
+
+
+git checkout -b feature/minha-feature
+```
+
+3. Commit suas alterações:
+
+
+git commit -m "Minha feature"
+```
+
+4. Envie para o repositório remoto:
+
+
+git push origin feature/minha-feature
+```
+
+5. Abra um **Pull Request** 🚀
+
+---
+
+## 📌 Autor
+
+**David Victor** – Desenvolvedor Back-end & Full Stack em formação
+
+Projeto pessoal criado para aprendizado e portfólio.
